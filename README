@@ -1,0 +1,64 @@
+ joey-mail a simple mailing quene with RSA encryption
+    Copyright (C) 2011 macintosh264
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+==README==
+To use joey-mail follow these simple steps:
+1. Generate RSA Keys.
+	- cd <DIRECTORY WHERE THIS FILE IS>
+	- php -f ./rsakeygen/gen.php
+1b. Copy the private key from the rsakeygen folder to the server folder
+1c. Copy the public key to the directory on your webserver where you intend to place the script to send mail from.
+
+2. Copy mail_class.php (./sendmail_scripts/mail_class.php) to the same directory as the public key ****VERY IMPORTANT THAT THE PUBLIC KEY AND THIS SCRIPT ARE IN THE SAME DIRECTORY****
+3. Done!
+
+===USAGE===
+Example located at ./sendmail_scripts/test.php
+
+To send mail you must define many variables and encode them as json and then take that string and put it in the mail quene, which is done through the MailerClass (./sendmail_scripts/test.php). Use like this:
+
+<?php
+require("mail_class.php");
+$mailer = new MailerClass();
+$mailer->loadKey();
+$message = array('to' => "test@example.com",'subject' => "test", 'html' => true, 'body' =>  "Body",'smtp_settings' => array('host' => 'smtp.gmail.com', 'port' => 465, 'ssl' => true, 'username' => "you@gmail.com", 'password' => 'yourpassword'), 'fromName' => 'your name', 'fromAddress' => "your e-mail address");
+$mailer->sendMail(json_encode($message));
+
+//Message is in quene
+
+?>
+
+Make sure you are running memcached on localhost on the default port. To change this alter the __construct method of mail_class.php (./sendmail_class/mail_class.php)
+
+===REQUIREMENTS===
+
+You MUST have memcached installed and running on localhost on the default port for this to work. You can change the host and port if you must by altering the __construct method of mail_class.php (./sendmail_class/mail_class.php). To install memcahced on debain/ubuntu(maybe) run the following command in the termainal: sudo apt-get install memcahced
+
+===MAIL VARIABLES===
+- to (address to send to, string)
+- subject (subject of the message, string)
+- html (is the body HTML?, boolean)
+- body (the body of the message, string)
+- smtp_settings (smtp auth, and other settings; associtive array)
+	- host (smtp host, string)
+	- port (smtp port, int)
+	- ssl (is the host ssl?, boolean)
+	- username (smtp username, string) * Not required, if not set, then auth is not used
+	- password (smtp password, string) * Not required, if not set, then auth is not used
+- fromName (your name, string)
+- fromAddress (your e-mail address that will appear in the from field)
+
+put these vars into an associtive array and give the class a json_encode of this array (ie. json_encode($mailArray))
