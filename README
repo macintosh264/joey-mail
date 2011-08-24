@@ -26,6 +26,8 @@ To use joey-mail follow these simple steps:
 3. Done!
 
 ===USAGE===
+First, cd into the directory where you downloaded joey-mail, then do the following: php -f ./server/mailserver.php
+Do not close this terminal window, because mail will not be sent. You must either set this as startup application or run this command manualy at startup. This script will never stop. To stop it manualy press control-c.
 Example located at ./sendmail_scripts/test.php
 
 To send mail you must define many variables and encode them as json and then take that string and put it in the mail quene, which is done through the MailerClass (./sendmail_scripts/test.php). Use like this:
