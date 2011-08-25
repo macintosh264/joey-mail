@@ -2,10 +2,10 @@
 //Long Running Server
 require("class.phpmailer.php");
 $index = "_quene5K1WT1DN2U0HDXZLZ381NTUTWCHM7GFQTVP6HC1OQOmemcached";
-$fh = fopen('RSAPRIVATE', 'r');
+$fh = fopen('RSAPRIVATE', 'r') or die('RSAPRIVATE file not present\n\n');
 $rsaPrivate = fread($fh, filesize('RSAPRIVATE'));
 fclose($fh);
-$fh = fopen('RSAPUBLIC', 'r');
+$fh = fopen('RSAPUBLIC', 'r') or die('RSAPUBLIC file not present\n\n');
 $rsaPublic = fread($fh, filesize('RSAPUBLIC'));
 fclose($fh);
 echo $rsaPrivate;
@@ -15,10 +15,19 @@ echo "\n";
 $checkInterval = 10;
 $seqNumber = 0;
 $messagesSent = 0;
+$arguements = array(array('-d','debug'));
+$argsRecived = array();
+foreach ($argv as $arguement) {
+foreach ($arguements as $arguement2) {
+if ($arguement == $arguement2[0]) {
+$argsRecived[$arguement2[1]] = true;
+}
+}
+}
+$debug = isset($argsRecived['debug']);
+//Open Connection
 $connection = new Memcached();
 $connection->addServer('localhost',11211);
-//Open Connection
-$debug = true;
 if ($debug) {
 echo "WELCOME TO JOEY MAILER HANDLER\nTHIS PROGRAM RESPONDS TO THE INDEX $index AND THAT MAILER INDEX ONLY.\nCHECK_RATE:$checkInterval\n", print_r($connection->getStats(),true),"\n","SERVER ACTIVE\n******************\n\n";
 }
