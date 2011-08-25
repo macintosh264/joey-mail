@@ -122,7 +122,7 @@ $auth = isset($settings["username"]);
 unset($messageData);
 unset($messageID);
 }
-$indexes = $messageIds;
+$indexes = $connection->get($index);
 $index911 = 0;
 foreach ($messageIds as $mess) {
 unset($indexes[$index911]);
