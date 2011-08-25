@@ -20,7 +20,7 @@ To use joey-mail follow these simple steps:
 	- cd <DIRECTORY WHERE THIS FILE IS>
 	- php -f ./rsakeygen/gen.php
 	- at this point 2 files should appear in the rsakeygen directory "RSAPRIVATE" and "RSAPUBLIC". These are your keys.
-1b. Copy the private key from the rsakeygen folder to the server folder
+1b. Copy the private key and the public key from the rsakeygen folder to the server folder
 1c. Copy the public key to the directory on your webserver where you intend to place the script to send mail from.
 
 2. Copy mail_class.php (./sendmail_scripts/mail_class.php) to the same directory as the public key ****VERY IMPORTANT THAT THE PUBLIC KEY AND THIS SCRIPT ARE IN THE SAME DIRECTORY****
